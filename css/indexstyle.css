@@ -1,0 +1,255 @@
+/* Importação de fontes para a nova estética */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Mono:wght@400;700&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Paleta Neon & Deep Space */
+    --ink: #ffffff;
+    --paper: #050505;
+    --accent: #00f2ff; /* Neon Cyan */
+    --accent-dark: #00666b;
+    --muted: #666666;
+    --border: #1a1a1a;
+    --field-bg: rgba(255, 255, 255, 0.03);
+    --glow: rgba(0, 242, 255, 0.4);
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    background-color: var(--paper);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Background com grade digital */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Overlay de vinheta e scanlines */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+        radial-gradient(circle at center, transparent 0%, #000 90%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.corner-deco {
+    position: fixed;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--glow);
+}
+.corner-deco.tl { top: 32px; left: 40px; }
+.corner-deco.tr { top: 32px; right: 40px; text-align: right; }
+.corner-deco.bl { bottom: 32px; left: 40px; }
+.corner-deco.br { bottom: 32px; right: 40px; text-align: right; }
+
+.card {
+    position: relative;
+    z-index: 1;
+    width: 440px;
+    max-width: 92vw;
+    padding: 60px 50px;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--accent);
+    /* Efeito de brilho externo e interno */
+    box-shadow:
+        0 0 20px rgba(0, 242, 255, 0.1),
+        inset 0 0 15px rgba(0, 242, 255, 0.05);
+    animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: scale(0.95); filter: brightness(2); }
+    to   { opacity: 1; transform: scale(1); filter: brightness(1); }
+}
+
+.card-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.card-eyebrow::before { content: '>'; }
+
+.card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.card-title em {
+    font-style: normal;
+    color: var(--accent);
+    text-shadow: 0 0 15px var(--glow);
+}
+
+.card-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    letter-spacing: 0.05em;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 36px;
+    opacity: 0.5;
+}
+
+.field {
+    margin-bottom: 25px;
+}
+
+.field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.field input {
+    width: 100%;
+    padding: 15px;
+    background: var(--field-bg);
+    border: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    outline: none;
+    transition: all 0.3s;
+    border-radius: 0; /* Visual angular */
+}
+
+.field input:focus {
+    border-color: var(--accent);
+    background: rgba(0, 242, 255, 0.05);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.field input::placeholder {
+    color: #333;
+}
+
+.error-msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 0, 85, 0.1);
+    border: 1px solid #ff0055;
+    padding: 12px;
+    font-size: 12px;
+    color: #ff0055;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); border-color: #fff; }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-2px); }
+    80% { transform: translateX(2px); }
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 18px;
+    margin-top: 10px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-submit::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateY(101%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 0;
+}
+
+.btn-submit:hover {
+    color: #000;
+    box-shadow: 0 0 25px var(--glow);
+}
+
+.btn-submit:hover::after {
+    transform: translateY(0);
+}
+
+.btn-submit span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-submit:active {
+    transform: scale(0.96);
+    filter: brightness(1.2);
+}
+
+.card-footer {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border);
+    font-size: 9px;
+    color: var(--muted);
+    text-align: center;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
